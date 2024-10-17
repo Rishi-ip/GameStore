@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better contrast */
+        }
+        .container {
+            margin-top: 20px; /* Add some space at the top */
+        }
+        img {
+            max-width: 100%; /* Allow images to scale with the table */
+            height: auto; /* Maintain aspect ratio */
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.8rem; /* Smaller font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'gamestoreapp/Header.html' %}
+
+    <div class="container">
+        <h2 class="mb-4 text-center">Order Details</h2>
+        <form action="placeorder">
+            {% csrf_token %}
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Email ID</th>
+                            <th>Product PID</th>
+                            <th>Product Name</th>
+                            <th>Product Category</th>
+                            <th>Product Description</th>
+                            <th>Product Price</th>
+                            <th>Product Image</th>
+                            <th>Product Quantity</th>
+                            <th>Total Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in cart %}
+                        <tr>
+                            
+                            <td>{{ i.cust_obj.emailId }}</td>
+                            <td>{{ i.product_obj.pid }}</td>
+                            
+                            <td>{{ i.product_obj.name }}</td>
+                            <td>{{ i.product_obj.category }}</td>
+                            <td>{{ i.product_obj.description }}</td>
+                            <td>{{ i.product_obj.price }}</td>
+                            <td><img src="/{{ i.product_obj.product_image }}" alt="Product Image"></td>
+                            <td>{{ i.quantity }}</td>
+                            <td>{{ i.totalprice }}</td>
+                            <td><a href="delete/{{i.id}}" class="btn btn-danger btn-sm">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Show Order" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

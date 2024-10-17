@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; /* Remove default margin */
+        }
+        .container {
+            padding: 0px; /* Add some padding to the container */
+        }
+        img {
+            max-width: 100px; /* Set a max width for images */
+            height: auto; /* Maintain aspect ratio */
+        }
+        @media (max-width: 576px) {
+            img {
+                max-width: 80px; /* Smaller images on smaller screens */
+            }
+            .table {
+                font-size: 0.9rem; /* Slightly smaller text for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'gamestoreapp/Header.html' %}
+
+    <div class="container">
+        <h2 class="mb-4 text-center">Product Details</h2>
+        <table class="table table-bordered table-responsive">
+            <caption class="text-center">Product Details</caption>
+            <thead class="thead-light">
+                <tr>
+                    <th>PID</th>
+                    <th>Product Name</th>
+                    <th>Product Category</th>
+                    <th>Product Description</th>
+                    <th>Product Price</th>
+                    <th>Product Image</th>
+                    {% if request.session.username is not  None and request.session.adminemailid is None %}
+
+                    <th colspan="3" class="text-center">Action</th>
+                    {% endif %}
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in product %}
+                <tr>
+                    <td>{{ p.pid }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.category }}</td>
+                    <td>{{ p.description }}</td>
+                    <td>{{ p.price }}</td>
+                    <td><img src="/{{ p.product_image }}" alt="{{ p.name }} Image"></td>
+                    {% if request.session.username is None and request.session.adminemailid is not None %}
+                    <td><a href="edit/{{ p.pid }}" class="btn btn-warning btn-sm">Edit</a></td>
+                    <td><a href="delete/{{ p.pid }}" class="btn btn-danger btn-sm">Delete</a></td>
+                    {% endif %}
+
+                    {% if request.session.username is not  None and request.session.adminemailid is None %}
+
+                    <td><a href="addcart/{{ p.pid }}" class="btn btn-success btn-sm">Add to Cart</a></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

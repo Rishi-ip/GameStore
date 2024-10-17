@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'update' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <table border="2" cellspacoing="6" cellpadding="6">
+            <h1>update product</h1>
+
+            <tr>
+                <td>
+                    <label for="">productid</label>
+                </td>
+                <td>
+                    <input type="text" name="productid" value="{{product.pid}}">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <label for="">name</label>
+                </td>
+                <td>
+                    <input type="text" name="name" value="{{product.name}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">category</label>
+                </td>
+                <td>
+                    <input type="text" name="category" value="{{product.category}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">description</label>
+                </td>
+                <td>
+                    <input type="text" name="description" value="{{product.description}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="">price</label>
+                </td>
+                <td>
+                    <input type="text" name="price" value="{{product.price}}">
+                </td>
+            </tr>
+
+        
+            <tr>
+
+                <td>
+                    <input type="submit" value="submit">
+                    <input type="reset" value="clear">
+                </td>
+            </tr>
+
+
+        </table>
+    </form>
+
+</body>
+</html>
